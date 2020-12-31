@@ -1,15 +1,35 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Overall, both functions make possible to calculate the inverse of a matrix
+## by using vectors and operators that work on vectors. 
+## The first one creates and stores the matrix as a "matrix"
+## The second one calculates the inverse of that matrix.
 
-## Write a short comment describing this function
+## As explained, this first function turns the matrix into a "matrix".
+## Which will make it possible to calculate the inverse with vector operators.
 
 makeCacheMatrix <- function(x = matrix()) {
-
+    i <- NULL
+    set <- function(y) {
+        x <<- y 
+        i <<- NULL
+    }
+    get <- function() x 
+    setinverse <- function(inverse) i <<- inverse
+    getinverse <- function() i
+    list(set = set, get = get,
+         setinverse = setinverse,
+         getinverse = getinverse)
 }
 
-
-## Write a short comment describing this function
+## This one solves the inverse of the "matrix".
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    i <- x$getinverse()
+    if(!is.null(i)) {
+        message("getting cached data")
+        return(i)
+    }
+    data <- x$get()
+    i <- solve(data, ...)
+    x$setinverse(i)
+    i
 }
